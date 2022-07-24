@@ -1,8 +1,8 @@
 package services
 
 import (
-	"smtp/services/smtp/config"
-	"smtp/services/smtp/sender/dto"
+	"smtp/app/config"
+	"smtp/app/sender/dto"
 	"crypto/tls"
 	"fmt"
 	"net/smtp"
@@ -18,9 +18,8 @@ func NewSender() *Sender {
 func (s *Sender) Send(payload dto.SendMailPayload) error {
 	host := config.GetConfig().Host
 	addr := config.GetConfig().Address
-	from := config.GetConfig().Email
 
-	auth := smtp.PlainAuth("", from, config.GetConfig().Password, host)
+	auth := smtp.PlainAuth("", payload.SenderMail, payload.SenderPassword, host)
 
 	// TLS config
 	tlsconfig := &tls.Config{
@@ -47,7 +46,7 @@ func (s *Sender) Send(payload dto.SendMailPayload) error {
 	}
 
 	// To && From
-	if err = c.Mail(from); err != nil {
+	if err = c.Mail(payload.SenderMail); err != nil {
 		return err
 	}
 
@@ -61,7 +60,7 @@ func (s *Sender) Send(payload dto.SendMailPayload) error {
 		return err
 	}
 
-	message := s.buildMessage(payload, from)
+	message := s.buildMessage(payload, payload.SenderMail)
 
 	_, err = w.Write([]byte(message))
 	if err != nil {

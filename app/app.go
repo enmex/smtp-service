@@ -2,9 +2,8 @@ package smtp
 
 import (
 	"smtp/pkg/logger"
-	"smtp/services/smtp/config"
-	delivery "smtp/services/smtp/sender/delivery/http"
-	"smtp/services/smtp/sender/services"
+	delivery "smtp/app/sender/delivery/http"
+	"smtp/app/sender/services"
 	"os"
 	"os/signal"
 	"syscall"
@@ -14,8 +13,6 @@ import (
 )
 
 func Start() {
-	config.Init()
-
 	web := NewAPIServer(":80").WithCors()
 
 	router := delivery.NewRouter(*delivery.NewController(*services.NewSender()))

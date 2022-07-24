@@ -2,8 +2,8 @@ package delivery
 
 import (
 	"smtp/pkg/httpext"
-	"smtp/services/smtp/sender/dto"
-	"smtp/services/smtp/sender/services"
+	"smtp/app/sender/dto"
+	"smtp/app/sender/services"
 	"encoding/json"
 	"net/http"
 )

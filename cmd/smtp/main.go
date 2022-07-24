@@ -2,7 +2,7 @@ package main
 
 import (
 	"smtp/pkg/logger"
-	smtpSrv "smtp/services/smtp"
+	smtpSrv "smtp/app"
 )
 
 func main() {
