@@ -1,0 +1,12 @@
+version: '3.9'
+
+services:
+  smtp-service: 
+    container_name: smtp-service
+    build:
+      context: .
+      dockerfile: ./docker/smtp-service.dockerfile
+    ports:
+      - ${PORT:-8081}:80
+    env_file: 
+      - ./services/smtp/.env
