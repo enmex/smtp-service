@@ -1,11 +1,11 @@
 package services
 
 import (
-	"smtp/app/config"
-	"smtp/app/sender/dto"
 	"crypto/tls"
 	"fmt"
 	"net/smtp"
+	"smtp/app/config"
+	"smtp/app/sender/dto"
 )
 
 type Sender struct {
@@ -20,14 +20,14 @@ func (s *Sender) Send(payload dto.SendMailPayload) error {
 	var provider config.Provider
 	var exist bool
 	if providerName == "" {
-		provider,exist = config.GetConfig().Providers["default"]
+		provider, exist = config.GetConfig().Providers["default"]
 	} else {
-		provider,exist = config.GetConfig().Providers[providerName]
+		provider, exist = config.GetConfig().Providers[providerName]
 	}
-	if !exist { 
+	if !exist {
 		return fmt.Errorf("%s provider not found", providerName)
 	}
-	
+
 	host := provider.Delivery.Host
 	addr := provider.Delivery.Address
 

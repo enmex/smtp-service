@@ -1,8 +1,8 @@
 package main
 
 import (
-	"smtp/pkg/logger"
 	smtpSrv "smtp/app"
+	"smtp/pkg/logger"
 )
 
 func main() {

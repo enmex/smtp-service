@@ -24,14 +24,14 @@ var (
 
 // Provider should be have default provider configuration
 type Config struct {
-	Mode           string              `json:"mode" yaml:"mode"`
-	Providers      map[string]Provider `json:"providers" yaml:"providers"`
+	Mode      string              `json:"mode" yaml:"mode"`
+	Providers map[string]Provider `json:"providers" yaml:"providers"`
 }
 
 var config Config
 
 func Init() error {
-	confFromFile,err := confFromFile("./config.yml")
+	confFromFile, err := confFromFile("./config.yml")
 	if err != nil {
 		return err
 	}

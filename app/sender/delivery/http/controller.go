@@ -1,11 +1,11 @@
 package delivery
 
 import (
-	"smtp/pkg/httpext"
-	"smtp/app/sender/dto"
-	"smtp/app/sender/services"
 	"encoding/json"
 	"net/http"
+	"smtp/app/sender/dto"
+	"smtp/app/sender/services"
+	"smtp/pkg/httpext"
 )
 
 type Controller struct {
