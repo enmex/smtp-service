@@ -5,8 +5,8 @@ services:
     container_name: smtp-service
     build:
       context: .
-      dockerfile: ./docker/smtp-service.dockerfile
+      dockerfile: ./Dockerfile
     ports:
       - ${PORT:-8081}:80
-    env_file: 
-      - ./services/smtp/.env
+    environment:
+      - CONFIG_PATH=./config.example.yml

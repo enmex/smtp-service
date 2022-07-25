@@ -16,10 +16,22 @@ func NewSender() *Sender {
 }
 
 func (s *Sender) Send(payload dto.SendMailPayload) error {
-	host := config.GetConfig().Host
-	addr := config.GetConfig().Address
+	providerName := payload.Provider
+	var provider config.Provider
+	var exist bool
+	if providerName == "" {
+		provider,exist = config.GetConfig().Providers["default"]
+	} else {
+		provider,exist = config.GetConfig().Providers[providerName]
+	}
+	if !exist { 
+		return fmt.Errorf("%s provider not found", providerName)
+	}
+	
+	host := provider.Delivery.Host
+	addr := provider.Delivery.Address
 
-	auth := smtp.PlainAuth("", payload.SenderMail, payload.SenderPassword, host)
+	auth := smtp.PlainAuth("", payload.SenderMail, provider.Credentials.Password, host)
 
 	// TLS config
 	tlsconfig := &tls.Config{

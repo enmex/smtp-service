@@ -1,8 +1,8 @@
 package dto
 
 type SendMailPayload struct {
-	SenderMail string `json:"sender_mail"`
-	SenderPassword string `json:"sender_password"`
+	Provider    string             `json:"provider,omitempty"`
+	SenderMail  string             `json:"sender_mail"`
 	Subject     string             `json:"subject"`
 	Message     string             `json:"message"`
 	Recipient   string             `json:"recipient"`

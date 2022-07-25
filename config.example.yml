@@ -1,0 +1,16 @@
+providers:
+  gmail:
+    credentials:
+      user:
+      password:
+    delivery:
+      host: 'smtp.gmail.com:'
+      address: 'smtp.gmail.com:465'
+  default:
+    credentials:
+      user:
+      password:
+    delivery:
+      host: 'smtp.gmail.com:'
+      address: 'smtp.gmail.com:465'   
+mode: 'SINGLE'
