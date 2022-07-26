@@ -1,4 +1,4 @@
-# SMPT Service
+# SMTP Service
 Implementing a mail client in Go for your services
 ### How to use
 
@@ -7,7 +7,7 @@ $ docker pull ghcr.io/ignavan39/go-smtp:latest
 ```
 
 ### create configuration
-[example configuration](https://github.com/ignavan39/go-smtp/blob/master/config.example.yml)
+[example configuration](https://github.com/enmex/smtp/blob/master/config.example.yml)
 create a file with any name and extension .yml 
 
 
