@@ -1,11 +1,11 @@
 package smtp
 
 import (
-	"smtp/pkg/logger"
-	delivery "smtp/app/sender/delivery/http"
-	"smtp/app/sender/services"
 	"os"
 	"os/signal"
+	delivery "smtp/app/sender/delivery/http"
+	"smtp/app/sender/services"
+	"smtp/pkg/logger"
 	"syscall"
 
 	"github.com/go-chi/chi"
