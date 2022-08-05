@@ -6,6 +6,7 @@ import (
 	"net/smtp"
 	"smtp/app/config"
 	"smtp/app/sender/dto"
+	"smtp/pkg/logger"
 )
 
 type Sender struct {
@@ -16,16 +17,18 @@ func NewSender() *Sender {
 }
 
 func (s *Sender) Send(payload dto.SendMailPayload) error {
+	logger.Logger.Info(config.GetConfig().Mode)
+
 	providerName := payload.Provider
 	var provider config.Provider
 	var exist bool
-	if providerName == "" {
+	if providerName == nil {
 		provider, exist = config.GetConfig().Providers["default"]
 	} else {
-		provider, exist = config.GetConfig().Providers[providerName]
+		provider, exist = config.GetConfig().Providers[*providerName]
 	}
 	if !exist {
-		return fmt.Errorf("%s provider not found", providerName)
+		return fmt.Errorf("%s provider not found", *providerName)
 	}
 
 	host := provider.Delivery.Host

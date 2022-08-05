@@ -2,6 +2,7 @@ package config
 
 import (
 	"os"
+	"smtp/pkg/logger"
 
 	"gopkg.in/yaml.v2"
 )
@@ -38,24 +39,28 @@ func Init() error {
 	config = *confFromFile
 
 	return nil
-
 }
 
 func GetConfig() Config {
 	return config
 }
-func confFromFile(fileName string) (*Config, error) {
 
+func confFromFile(fileName string) (*Config, error) {
 	file, err := os.Open(fileName)
 	if err != nil {
+		logger.Logger.Errorf("[Config][confFromFile] Error opening config file: %s", err)
 		return nil, err
 	}
 
 	var conf Config
 	defer file.Close()
+
 	if err := yaml.NewDecoder(file).Decode(&conf); err != nil {
+		logger.Logger.Error("[Config][confFromFile] Error decoding config")
 		return nil, err
 	}
 
+	logger.Logger.Info("Config loaded successfully")
+	
 	return &conf, nil
 }
