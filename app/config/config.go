@@ -32,7 +32,7 @@ type Config struct {
 var config Config
 
 func Init() error {
-	confFromFile, err := confFromFile("./config.yml")
+	confFromFile, err := confFromFile("./usr/local/bin/config.yml")
 	if err != nil {
 		return err
 	}
@@ -56,7 +56,7 @@ func confFromFile(fileName string) (*Config, error) {
 	defer file.Close()
 
 	if err := yaml.NewDecoder(file).Decode(&conf); err != nil {
-		logger.Logger.Error("[Config][confFromFile] Error decoding config")
+		logger.Logger.Errorf("[Config][confFromFile] Error decoding config :%s",err.Error())
 		return nil, err
 	}
 

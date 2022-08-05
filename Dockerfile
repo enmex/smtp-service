@@ -1,11 +1,15 @@
 FROM golang:1.18-alpine as builder
 
 WORKDIR /srv
-ENV CONFIG_PATH=${CONFIG_PATH}
+
+ARG config_path
+
 COPY ./go.mod ./ ./go.sum ./
+COPY $config_path ./
 
 RUN go mod download \
     && go mod verify
+RUN cp $config_path config.yml
 
 COPY ./ ./
 
@@ -13,9 +17,6 @@ RUN CGO_ENABLED=0 GOOS=linux \
     go build -a \
     -ldflags '-extldflags "-static"' \
     -o smtp ./cmd/main.go
-RUN echo $CONFIG_PATH > ./config.yml
-
-WORKDIR /srv
 
 FROM scratch
 COPY --from=builder srv/smtp /usr/local/bin/smtp

@@ -2,11 +2,11 @@ version: '3.9'
 
 services:
   smtp-service: 
-    container_name: smtp-service
+    container_name: smtp-service1
     build:
       context: .
       dockerfile: ./Dockerfile
+      args:
+        - config_path=config.example.yml
     ports:
       - ${PORT:-8081}:80
-    environment:
-      - CONFIG_PATH=./config.example.yml
