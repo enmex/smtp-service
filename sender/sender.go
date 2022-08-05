@@ -4,7 +4,7 @@ import (
 	"crypto/tls"
 	"fmt"
 	"net/smtp"
-	"smtp/config"
+	"github.com/enmex/smtp/config"
 )
 
 type Sender struct {
