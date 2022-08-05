@@ -1,34 +1,29 @@
-package services
+package sender
 
 import (
 	"crypto/tls"
 	"fmt"
 	"net/smtp"
-	"smtp/app/config"
-	"smtp/app/sender/dto"
-	"smtp/pkg/logger"
+	"smtp/config"
 )
 
 type Sender struct {
+	config config.Config
 }
 
-func NewSender() *Sender {
-	return &Sender{}
+func NewSender(config config.Config) *Sender {
+	return &Sender{
+		config: config,
+	}
 }
 
-func (s *Sender) Send(payload dto.SendMailPayload) error {
-	logger.Logger.Info(config.GetConfig().Mode)
+func (s *Sender) Send(payload SendMailPayload) error {
 
 	providerName := payload.Provider
-	var provider config.Provider
-	var exist bool
-	if providerName == nil {
-		provider, exist = config.GetConfig().Providers["default"]
-	} else {
-		provider, exist = config.GetConfig().Providers[*providerName]
-	}
+	provider, exist := s.config.Providers[providerName]
+
 	if !exist {
-		return fmt.Errorf("%s provider not found", *providerName)
+		return fmt.Errorf("%s provider not found", providerName)
 	}
 
 	host := provider.Delivery.Host
@@ -92,7 +87,7 @@ func (s *Sender) Send(payload dto.SendMailPayload) error {
 	return nil
 }
 
-func (s *Sender) buildMessage(payload dto.SendMailPayload, sender string) string {
+func (s *Sender) buildMessage(payload SendMailPayload, sender string) string {
 	delimiter := "beer=happiness"
 
 	msg := fmt.Sprintf("From: %s\r\n", sender)
